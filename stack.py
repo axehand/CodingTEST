@@ -9,27 +9,32 @@
 # top: 스택의 가장 위에 있는 정수를 출력한다. 만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력한다.
 
 import sys
+
 stack = []
-a = sys.stdin.read()
-for i in range(0,int(a)):
-    x = sys.stdin.readline.split(' ')
-    if x[0] == 'push':
-        stack.append(x[1]) #정수를 스택에 추가
-    elif x[0] =='pop':
-        if len(stack) != 0:
-            sys.stdout.write(stack[-1])
-            stack.remove(stack[-1])
+
+def process_command(command):
+    if command[0] == 'push':
+        stack.append(int(command[1]))
+    elif command[0] == 'pop':
+        if stack:
+            print(stack.pop())
         else:
-            sys.stdout.write(-1)
-    elif x[0] == 'size':
-        sys.stdout.write(len(stack))
-    elif x[0] == 'empty':
-        if len(stack) == 0:
-            sys.stdout.write(1)
+            print(-1)
+    elif command[0] == 'size':
+        print(len(stack))
+    elif command[0] == 'empty':
+        print(1 if not stack else 0)
+    elif command[0] == 'top':
+        if stack:
+            print(stack[-1])
         else:
-            sys.stdout.write(0)
-    elif x[0] =='top':
-        if stack[-1] != None:
-            sys.stdout.write(stack[-1])
-        else:
-            sys.stdout.write(-1)
+            print(-1)
+
+def main():
+    n = int(sys.stdin.readline().strip())
+    for _ in range(n):
+        command = sys.stdin.readline().split()
+        process_command(command)
+
+if __name__ == "__main__":
+    main()
